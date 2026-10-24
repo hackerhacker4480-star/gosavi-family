@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#075e54">
+<title>GOSAVI FAMILY</title>
+<style>
+:root{--green:#075e54;--green2:#128c7e;--light:#e9f5f0;--bg:#f4f7f6;--text:#172321;--muted:#70807c}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:520px;min-height:100vh;margin:auto;background:#fff;box-shadow:0 0 24px #00000012;display:flex;flex-direction:column}
+header{background:var(--green);color:#fff;padding:18px 16px 0;position:sticky;top:0;z-index:5}
+.top{display:flex;align-items:center;gap:12px;padding-bottom:16px}
+.logo{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#fff;color:var(--green);font-weight:800;font-size:18px}
+.brand{flex:1}.brand h1{font-size:19px;margin:0 0 4px;letter-spacing:.3px}.brand small{opacity:.85}
+.iconbtn{border:0;background:transparent;color:#fff;font-size:22px;padding:7px;cursor:pointer}
+.tabs{display:flex;justify-content:space-around}
+.tab{padding:13px 7px 12px;border:0;border-bottom:3px solid transparent;background:none;color:#d9efea;font-weight:700;font-size:13px;cursor:pointer}
+.tab.active{border-color:#fff;color:#fff}
+.searchwrap{padding:12px 14px;background:#fff}
+.search{width:100%;border:0;background:#f0f4f2;border-radius:10px;padding:13px 15px;font-size:15px;outline-color:var(--green2)}
+.content{flex:1;padding-bottom:80px}
+.sectiontitle{font-size:13px;color:var(--green2);font-weight:700;padding:14px 16px 8px}
+.chatrow{display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid #edf0ef;cursor:pointer;align-items:center}
+.avatar{width:50px;height:50px;border-radius:50%;background:#d8eee7;color:var(--green);display:grid;place-items:center;font-weight:800;font-size:17px;flex-shrink:0}
+.chatinfo{min-width:0;flex:1}.chatline{display:flex;justify-content:space-between;gap:8px}.chatname{font-weight:700;font-size:15px}.time{font-size:11px;color:var(--muted);white-space:nowrap}.preview{font-size:13px;color:var(--muted);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:11px;background:var(--green2);color:white;border-radius:15px;padding:3px 7px}
+.fab{position:fixed;bottom:24px;right:max(22px,calc((100vw - 520px)/2 + 22px));border:0;border-radius:18px;width:57px;height:57px;background:var(--green2);color:white;font-size:27px;box-shadow:0 5px 14px #0002;cursor:pointer}
+.notice{margin:18px 16px;padding:13px;border-radius:10px;background:#edf8f4;color:#42645b;font-size:12px;line-height:1.5}
+.empty{padding:55px 25px;text-align:center;color:var(--muted)}.empty b{display:block;color:var(--text);margin-bottom:8px}
+#chatView{display:none;flex:1;min-height:70vh;flex-direction:column;background:#eaf1ed}
+.chathead{background:var(--green);color:white;padding:12px;display:flex;align-items:center;gap:10px}
+.chathead .back{background:none;border:0;color:white;font-size:25px;cursor:pointer}
+.chathead .avatar{width:39px;height:39px;background:#d8eee7}
+.chathead .name{font-weight:bold}.chathead small{display:block;margin-top:3px;opacity:.8}
+.messages{flex:1;padding:16px 12px;display:flex;flex-direction:column;gap:9px;overflow:auto;min-height:300px}
+.bubble{max-width:82%;background:#fff;padding:10px 12px;border-radius:10px 10px 10px 2px;font-size:14px;line-height:1.4;box-shadow:0 1px 2px #0001;align-self:flex-start;overflow-wrap:anywhere}
+.bubble.mine{background:#d9fdd3;align-self:flex-end;border-radius:10px 10px 2px 10px}
+.bubble time{display:block;text-align:right;color:#718079;font-size:10px;margin-top:4px}
+.composer{display:flex;gap:8px;padding:10px;background:#f5f7f6;align-items:center}
+.composer input{flex:1;min-width:0;border:0;border-radius:24px;padding:14px;font-size:15px;outline-color:var(--green2)}
+.send{border:0;background:var(--green2);color:white;border-radius:50%;width:46px;height:46px;font-size:20px;cursor:pointer}
+.panel{display:none;padding:25px 18px}.panel h2{margin-top:0}
+.primary{border:0;background:var(--green2);color:white;padding:12px 16px;border-radius:9px;font-weight:700;cursor:pointer}
+footer{padding:13px;text-align:center;color:#9aa7a3;font-size:11px;border-top:1px solid #edf0ef}
+@media(min-width:521px){body{padding:12px 0}.app{border-radius:16px;overflow:hidden;min-height:calc(100vh - 24px)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="top">
+    <div class="logo">GF</div>
+    <div class="brand"><h1>GOSAVI FAMILY</h1><small>Your Family. Your Connection. 💚</small></div>
+    <button class="iconbtn" aria-label="More" onclick="showInfo()">⋮</button>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" onclick="showTab('chats',this)">CHATS</button>
+    <button class="tab" onclick="showTab('updates',this)">UPDATES</button>
+    <button class="tab" onclick="showTab('calls',this)">CALLS</button>
+  </nav>
+</header>
+<div class="searchwrap" id="searchWrap"><input class="search" id="search" placeholder="🔎  Search chats" oninput="filterChats()"></div>
+<main class="content" id="mainContent">
+  <div id="chatsPanel">
+    <div class="sectiontitle">YOUR CHATS</div>
+    <div id="chatList">
+      <div class="chatrow" data-name="Gosavi Family Group" onclick="openChat('Gosavi Family Group','GF','Welcome to Gosavi Family!')">
+        <div class="avatar">GF</div><div class="chatinfo"><div class="chatline"><span class="chatname">Gosavi Family Group</span><span class="time">Today</span></div><div class="preview">Welcome to Gosavi Family! 💚</div></div><span class="badge">1</span>
+      </div>
+      <div class="chatrow" data-name="New Chat" onclick="newChat()">
+        <div class="avatar">＋</div><div class="chatinfo"><div class="chatline"><span class="chatname">Start a new chat</span><span class="time"> </span></div><div class="preview">Open a local demo conversation</div></div>
+      </div>
+    </div>
+    <div class="notice"><b>Demo version:</b> Messages are stored only in this browser on this device. Real accounts, online messaging, calls and notifications need a backend and user authentication.</div>
+  </div>
+  <div class="panel" id="updatesPanel"><h2>Updates</h2><p>Status updates will appear here in a future version.</p><button class="primary" onclick="alert('Status feature is a demo placeholder.')">＋ Add status</button></div>
+  <div class="panel" id="callsPanel"><h2>Calls</h2><p>Voice and video calling can be added after the chat backend is set up.</p></div>
+  <div class="panel" id="infoPanel"><h2>GOSAVI FAMILY</h2><p>A family-friendly chatting app starter.</p><p>Version 1.0 • Front-end demo</p><button class="primary" onclick="showTab('chats',document.querySelector('.tab'))">Back to chats</button></div>
+</main>
+<section id="chatView">
+  <div class="chathead"><button class="back" onclick="closeChat()">‹</button><div class="avatar" id="chatAvatar">GF</div><div style="flex:1"><div class="name" id="chatTitle">Gosavi Family Group</div><small>Demo chat · on this device</small></div><button class="iconbtn" onclick="alert('Calling will be available after backend setup.')">☎</button><button class="iconbtn" onclick="alert('Video calling will be available after backend setup.')">▣</button></div>
+  <div class="messages" id="messages"></div>
+  <form class="composer" id="messageForm"><input id="messageInput" placeholder="Type a message..." autocomplete="off" maxlength="2000"><button class="send" type="submit" aria-label="Send">➤</button></form>
+</section>
+<footer>GOSAVI FAMILY • Made with 💚</footer>
+</div>
+<button class="fab" id="fab" onclick="newChat()" aria-label="New chat">✎</button>
+<script>
+const KEY='gosavi-family-demo-v1';
+let activeChat='';
+function loadStore(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+function saveStore(s){localStorage.setItem(KEY,JSON.stringify(s))}
+function openChat(name,initials,welcome){
+ activeChat=name;document.getElementById('chatTitle').textContent=name;document.getElementById('chatAvatar').textContent=initials;
+ document.getElementById('mainContent').style.display='none';document.getElementById('searchWrap').style.display='none';document.getElementById('chatView').style.display='flex';document.getElementById('fab').style.display='none';
+ const store=loadStore();if(!store[name]){store[name]=[{text:welcome||('Welcome to '+name+'!'),mine:false,time:now()}];saveStore(store)}
+ renderMessages();
+}
+function renderMessages(){const box=document.getElementById('messages');box.innerHTML='';const store=loadStore();(store[activeChat]||[]).forEach(m=>{const el=document.createElement('div');el.className='bubble'+(m.mine?' mine':'');el.textContent=m.text;const t=document.createElement('time');t.textContent=m.time;el.appendChild(t);box.appendChild(el)});box.scrollTop=box.scrollHeight}
+function now(){return new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}
+document.getElementById('messageForm').addEventListener('submit',e=>{e.preventDefault();const input=document.getElementById('messageInput');const text=input.value.trim();if(!text||!activeChat)return;const store=loadStore();store[activeChat]=store[activeChat]||[];store[activeChat].push({text,mine:true,time:now()});saveStore(store);input.value='';renderMessages()});
+function closeChat(){document.getElementById('chatView').style.display='none';document.getElementById('mainContent').style.display='block';document.getElementById('searchWrap').style.display='block';document.getElementById('fab').style.display='grid';activeChat=''}
+function newChat(){const name=prompt('Enter a chat or group name:');if(!name||!name.trim())return;const clean=name.trim();const row=document.createElement('div');row.className='chatrow';row.dataset.name=clean;const avatar=document.createElement('div');avatar.className='avatar';avatar.textContent=clean.slice(0,2).toUpperCase();const info=document.createElement('div');info.className='chatinfo';const line=document.createElement('div');line.className='chatline';const title=document.createElement('span');title.className='chatname';title.textContent=clean;const time=document.createElement('span');time.className='time';time.textContent='Now';line.append(title,time);const preview=document.createElement('div');preview.className='preview';preview.textContent='Tap to open conversation';info.append(line,preview);row.append(avatar,info);row.onclick=()=>openChat(clean,clean.slice(0,2).toUpperCase(),'Welcome to '+clean+'!');document.getElementById('chatList').prepend(row);openChat(clean,clean.slice(0,2).toUpperCase(),'Welcome to '+clean+'!')}
+function filterChats(){const q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.chatrow').forEach(r=>r.style.display=(r.dataset.name||r.innerText).toLowerCase().includes(q)?'flex':'none')}
+function showTab(which,button){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));if(button)button.classList.add('active');['chats','updates','calls','info'].forEach(x=>{const el=document.getElementById(x+'Panel');if(el)el.style.display=(x===which?'block':'none')});document.getElementById('searchWrap').style.display=which==='chats'?'block':'none';document.getElementById('fab').style.display=which==='chats'?'grid':'none';document.getElementById('chatView').style.display='none';document.getElementById('mainContent').style.display='block'}
+function showInfo(){showTab('info',null)}
+</script>
+</body>
+</html>
